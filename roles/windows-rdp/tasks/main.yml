@@ -1,0 +1,24 @@
+- name: Allow users to connect remotely by using Remote Desktop Services
+  win_regedit:
+    path: '{{ item }}'
+    name: fDenyTSConnections
+    data: 00000000
+    type: dword
+    state: "{{ 'present' if remote_desktop_enabled else 'absent' }}"
+  register: remote_desktop_enabled
+  with_items:
+    - "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Terminal Server\\"
+    - "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\Terminal Services"
+  tags:
+    - configuration
+
+- name: Firewall rule to allow RDP on TCP port 3389
+  win_firewall_rule:
+    name: Remote Desktop
+    localport: 3389
+    action: allow
+    direction: in
+    protocol: tcp
+    profiles: private
+    state: "{{ 'present' if remote_desktop_enabled else 'absent' }}"
+    enabled: yes
