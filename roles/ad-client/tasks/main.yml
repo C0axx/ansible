@@ -1,6 +1,6 @@
 ---
 # tasks file for ad-client
-- name: install windows feature AD-DS on DCs
+- name: configure DNS to DC IP address
   win_dns_client:
     adapter_names: "*"
     ipv4_addresses:
