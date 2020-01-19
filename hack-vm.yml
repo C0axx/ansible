@@ -123,7 +123,7 @@
           - UpdateRollups
         state: installed
 
-    - name: install multiple packages with choco
+    - name: install multiple packages with choco sequentially (avoid rate limiting)
       win_chocolatey:
         name: '{{ item }}'
         state: present
