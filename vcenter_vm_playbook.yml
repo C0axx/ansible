@@ -1,0 +1,15 @@
+---
+# playbook for cloning and provisioning VMs in vCenter
+
+# first clone a VM. 
+- name: clone vm
+  import_playbook: vcenter_clone_playbook.yml
+
+# runs the windows playbook if the template name corresponds to windows. could maybe extract this information a bit more elegantly, as this still relies on the template name
+- name: configure windows vm
+  import_playbook: w10_playbook.yml
+  when: template_name == "w10-1903-template"
+
+- name: configure kali vm
+  import_playbook: kali_playbook.yml
+  when: template_name == "kali-template" or "kali-light-template"
