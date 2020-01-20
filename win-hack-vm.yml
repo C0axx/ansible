@@ -131,6 +131,8 @@
           - CriticalUpdates
           - UpdateRollups
         state: installed
+      tags:
+        - update
 
     - name: install multiple packages with choco
       win_chocolatey:
@@ -145,7 +147,13 @@
         - vscode.install
         - vscode-powershell
         - vscode-ansible
-        - visualstudio2017community
+        - visualstudio2019community
+        - visualstudio2019-workload-manageddesktop
+        - azure-cli
+        - azurepowershell
+        - powershell-core
+        - awscli
+        - gcloudsdk
         - jre8
         - microsoft-windows-terminal
         - neo4j-community
@@ -155,6 +163,8 @@
         - vmware-tools
         ignore_checksums: yes
         state: latest
+      tags:
+        - update
       
     - name: change hostname
       win_hostname:
@@ -165,18 +175,22 @@
       win_reboot:
       when: changed_hostname.reboot_required or changed_location.restart_required
 
-    - name: install wsl ubuntu package with choco
+    - name: install wsl ubuntu package with choco (only after wsl is enabled and rebooted)
       win_chocolatey:
         name:
         - wsl-ubuntu-1804
         state: latest
 
-    - name: Remove OneDrive from Explorer Name Space Tree (64bit)
+    - name: remove OneDrive from Explorer Name Space Tree (64bit)
       win_regedit:
-        path: HKCR:\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}
+        path: HKCU:\Software\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}
         name: System.IsPinnedToNameSpaceTree
         data: 0
         type: dword
+
+    - name: delete lnk files on desktop
+      win_shell:
+        Remove-Item -Path 'C:\Users\*\Desktop\*.lnk'
 
     - name: reboot one final time to make sure everything applies
       win_reboot:
