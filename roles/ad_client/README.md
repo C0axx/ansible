@@ -27,7 +27,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     tasks:
         - include_role:
-            name: role-template
+            name: role_template
         vars:
             variable: true
 
