@@ -33,9 +33,10 @@
         type: dword
         state: present
 
-    - name: create registry path for real-time protection
-      win_regedit:
-        path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
+    - name: include disable_defender role
+      include_role:
+        name: disable_defender
+        state: present
         
     - name: disable defender real time monitoring
       win_regedit:
