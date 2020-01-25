@@ -1,4 +1,4 @@
 ---
-# defaults file for windows-rdp
+# defaults file for windows_rdp
 
 remote_desktop_enabled: false
