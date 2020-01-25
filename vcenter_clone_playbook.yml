@@ -13,7 +13,7 @@
       private: yes
 
     - name: vm_name
-      prompt: "Enter your vm name. (will be prefixed with your username)"
+      prompt: "Enter your vm name."
       private: no
 
   tasks:
