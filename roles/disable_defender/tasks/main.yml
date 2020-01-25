@@ -1,0 +1,41 @@
+---
+# tasks file for disable_defender
+- name: create registry path for real-time protection
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
+    
+- name: disable defender real-time monitoring
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
+    name: DisableRealtimeMonitoring
+    data: 1
+    type: dword
+    state: present
+
+- name: create registry path for "spynet"
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet
+
+- name: disable "cloud-delivered protection"
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet
+    name: SpynetReporting
+    data: 0
+    type: dword
+    state: present
+
+- name: disable "automatic sample submission"
+  win_regedit:
+    path: HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet
+    name: SubmitSamplesConsent
+    data: 2
+    type: dword
+    state: present
+
+- name: disable defender smartscreen
+  win_regedit:
+    path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer
+    name: SmartScreenEnabled
+    data: Off
+    type: String
+    state: present
