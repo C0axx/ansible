@@ -1,24 +1,12 @@
 ---
 # playbook for win-hack-vm
-
-## Task list
-
-# disable account expiry
-# disable uac
-# disable av and smartscreen
-# set dark theme
-# set region to norway and time zone
-# set network interface to private
-# enable smb
-# configure shares
-# windows updates
-# install choco and packages
-# set ip and dns for host-only interface
-# change hostname
-# reboot
-
-- hosts: hack_vm
+- hosts: win_hack_vm
   tasks:
+    - name: include disable_defender role
+      include_role:
+        name: disable_defender
+        state: present
+        
     - name: disable password expiry
       win_user:
         name: administrator
@@ -33,47 +21,6 @@
         type: dword
         state: present
 
-    - name: include disable_defender role
-      include_role:
-        name: disable_defender
-        state: present
-        
-    - name: disable defender real time monitoring
-      win_regedit:
-        path: HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection
-        name: DisableRealtimeMonitoring
-        data: 1
-        type: dword
-        state: present
-
-    - name: create registry path for spynet
-      win_regedit:
-        path: HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet
-
-    - name: disable "cloud-delivered protection"
-      win_regedit:
-        path: HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet
-        name: SpynetReporting
-        data: 0
-        type: dword
-        state: present
-
-    - name: disable "automatic sample submission"
-      win_regedit:
-        path: HKLM:\Software\Policies\Microsoft\Windows Defender\Spynet
-        name: SubmitSamplesConsent
-        data: 2
-        type: dword
-        state: present
-
-    - name: disable defender smartscreen
-      win_regedit:
-        path: HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer
-        name: SmartScreenEnabled
-        data: Off
-        type: String
-        state: present
-
     - name: disable light time (enable dark theme)
       win_regedit:
         path: HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize
@@ -81,7 +28,6 @@
         data: 0
         type: dword
         state: present
-
 
     - name: Set format, location and unicode to Norway
       win_region:
