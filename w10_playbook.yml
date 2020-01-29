@@ -1,0 +1,9 @@
+---
+# playbook for windows 10 vm
+- hosts: windows_vm
+  tasks:
+    - name: disable password expiry
+      win_user:
+        name: administrator
+        password_never_expires: yes
+        state: present

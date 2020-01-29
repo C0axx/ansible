@@ -1,11 +1,12 @@
 ---
-# playbook for win-hack-vm
+# playbook for windows hacking vm
 - hosts: win_hack_vm
   tasks:
+    - debug:
+      msg: "Always runs"
     - name: include disable_defender role
       include_role:
         name: disable_defender
-        state: present
         
     - name: disable password expiry
       win_user:
@@ -141,3 +142,4 @@
 
     - name: reboot one final time to make sure everything applies
       win_reboot:
+      tags: reboot

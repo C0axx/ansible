@@ -8,13 +8,13 @@
     #  prompt: "Enter your username"
     #  private: no
 
-    - name: password
-      prompt: "Enter your password (input hidden)"
-      private: yes
+    # - name: password
+    #   prompt: "Enter your password (input hidden)"
+    #   private: yes
 
-    - name: vm_name
-      prompt: "Enter your vm name."
-      private: no
+    # - name: vm_name
+    #   prompt: "Enter your vm name."
+    #   private: no
 
   tasks:
     - name: Clone a virtual machine from another
@@ -24,8 +24,8 @@
         password: "{{ password }}"
         validate_certs: no
         datacenter: "{{ datacenter_name }}"
-        folder: "{{ folder_prefix }}/{{ username }}"
-        name: "{{ username }}-{{ vm_name }}"
+        folder: "{{ folder_path }}"
+        name: "{{ vm_name }}"
         state: poweredon
         template: "{{ template_name }}"
         disk:
@@ -50,7 +50,14 @@
       debug:
         msg: "{{ vm.instance.ipv4 }}"
 
-    - name: register host in inventory with ip address
+    - name: register windows host in group in dynamic inventory with ip address
       add_host:
         name: "{{ vm.instance.ipv4 }}"
-        groups: new_vm
+        groups: windows_vm
+        tags: [never, w10]
+
+    - name: register linux host group in dynamic inventory with ip address
+      add_host:
+        name: "{{ vm.instance.ipv4 }}"
+        groups: linux_vm
+        tags: [never, kali, ubuntu]
