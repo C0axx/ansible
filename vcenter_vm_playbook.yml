@@ -4,14 +4,13 @@
 # first clone a VM. will always run
 - name: clone vm
   import_playbook: vcenter_clone_playbook.yml
-  tags: 
-  - always
 
-# runs the playbook specified by tag. these never run unless explicitly stated
+# runs the playbook specified by template name
+- name: configure linux vm
+  import_playbook: linux_playbook.yml
+  when:
+  - '"kali" in template_name or "ubuntu" in template_name'
+
 - name: configure windows vm
   import_playbook: w10_playbook.yml
-  tags: [never, w10]
-
-- name: configure kali vm
-  import_playbook: kali_playbook.yml
-  tags: [never, kali]
+  when: '"w10" in template_name'

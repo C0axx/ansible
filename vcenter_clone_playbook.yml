@@ -48,16 +48,24 @@
 
     - name: IP address info from VM
       debug:
-        msg: "{{ vm.instance.ipv4 }}"
+        msg: 'IP: "{{ vm.instance.ipv4 }}"'
 
-    - name: register windows host in group in dynamic inventory with ip address
-      add_host:
-        name: "{{ vm.instance.ipv4 }}"
-        groups: windows_vm
-        tags: [never, w10]
-
-    - name: register linux host group in dynamic inventory with ip address
+    - name: register kali linux host group in dynamic inventory with ip address
       add_host:
         name: "{{ vm.instance.ipv4 }}"
         groups: linux_vm
-        tags: [never, kali, ubuntu]
+        ansible_user: kali
+      when: '"kali" in template_name'
+    
+    - name: register ubuntu linux host group in dynamic inventory with ip address
+      add_host:
+        name: "{{ vm.instance.ipv4 }}"
+        groups: linux_vm
+        ansible_user: ubuntu
+      when: '"ubuntu" in template_name'
+
+    - name: register windows host group in dynamic inventory with ip address
+      add_host:
+        name: "{{ vm.instance.ipv4 }}"
+        groups: windows_vm
+      when: '"w10" in template_name'

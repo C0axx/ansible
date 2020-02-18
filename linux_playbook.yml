@@ -1,0 +1,21 @@
+# playbook for kali vm
+---
+- hosts: linux_vm
+  tasks:
+    - name: change hostname
+      hostname:
+        name: "{{ vm_name }}"
+
+    - name: replace hosts file name
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '^127\.0\.1\.1.*'
+        line: '127.0.1.1 {{ vm_name }} {{ vm_name }}'
+        state: present
+
+    - name: replace authorized key with current user's public key
+      authorized_key:
+        user: "{{ ansible_user }}"
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+        exclusive: True
+        state: present
