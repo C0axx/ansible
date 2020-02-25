@@ -21,6 +21,5 @@
     action: allow
     direction: in
     protocol: tcp
-    profiles: private
     state: "{{ 'present' if remote_desktop_enabled else 'absent' }}"
     enabled: yes
