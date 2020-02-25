@@ -8,20 +8,20 @@
     #  prompt: "Enter your username"
     #  private: no
 
-    # - name: password
-    #   prompt: "Enter your password (input hidden)"
-    #   private: yes
+    - name: vcenter_password
+      prompt: "Enter your password (input hidden)"
+      private: yes
 
     # - name: vm_name
     #   prompt: "Enter your vm name."
     #   private: no
 
   tasks:
-    - name: Clone a virtual machine from another
+    - name: Clone a virtual machine from template
       vmware_guest:
         hostname: "{{ vcenter_hostname }}"
-        username: "{{ username }}@{{ domain_name }}"
-        password: "{{ password }}"
+        username: "{{ vcenter_username }}@{{ domain_name }}"
+        password: "{{ vcenter_password }}"
         validate_certs: no
         datacenter: "{{ datacenter_name }}"
         folder: "{{ folder_path }}"
@@ -50,22 +50,26 @@
       debug:
         msg: 'IP: "{{ vm.instance.ipv4 }}"'
 
-    - name: register kali linux host group in dynamic inventory with ip address
+    - name: "Ansible | Print a variable"
+      debug:
+        msg: "The operating system is {{ os }}"
+
+    - name: register linux host group with username kali in dynamic inventory with ip address
       add_host:
         name: "{{ vm.instance.ipv4 }}"
         groups: linux_vm
         ansible_user: kali
-      when: '"kali" in template_name'
+      when: "'kali' in os"
     
-    - name: register ubuntu linux host group in dynamic inventory with ip address
+    - name: register linux host group with username ubuntu in dynamic inventory with ip address
       add_host:
         name: "{{ vm.instance.ipv4 }}"
         groups: linux_vm
         ansible_user: ubuntu
-      when: '"ubuntu" in template_name'
+      when: "'ubuntu' in os"
 
     - name: register windows host group in dynamic inventory with ip address
       add_host:
         name: "{{ vm.instance.ipv4 }}"
         groups: windows_vm
-      when: '"w10" in template_name'
+      when: "'windows' in os"

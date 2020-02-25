@@ -1,16 +1,21 @@
 ---
 # playbook for cloning and provisioning VMs in vCenter
-
 # first clone a VM. will always run
+
 - name: clone vm
   import_playbook: vcenter_clone_playbook.yml
 
+# - name: Wait 300 seconds, but only start checking after 60 seconds
+#   wait_for_connection:
+#     delay: 60
+#     timeout: 300
+#   when: "'windows' in os"
+
 # runs the playbook specified by template name
 - name: configure linux vm
-  import_playbook: linux_playbook.yml
-  when:
-  - '"kali" in template_name or "ubuntu" in template_name'
+  import_playbook: scanrigg_linux_playbook.yml
+  when: "'kali' in os or 'ubuntu' in os"
 
 - name: configure windows vm
-  import_playbook: w10_playbook.yml
-  when: '"w10" in template_name'
+  import_playbook: scanrigg_w10_playbook.yml
+  when: "'windows' in os"
