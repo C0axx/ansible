@@ -1,4 +1,3 @@
-tasks:
   - name: Update repo and upgrade all packages to the latest version (Debian family)
     apt:
       name: '*'
@@ -30,7 +29,7 @@ tasks:
   #   debug:
   #       var: uname_result.stdout_lines
 
-handlers:
+#handlers:
   - name: Reboot server
     shell: 'sleep 5 && shutdown -r now "Rebooting to complete system upgrade"'
     async: 1
