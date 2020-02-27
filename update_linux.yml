@@ -1,4 +1,5 @@
 - hosts: all
   tasks:
     - name: update linux
-      include_role: update_linux
+      include_role:
+        name: update_linux
