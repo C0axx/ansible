@@ -13,12 +13,8 @@ if [ $OS == 'kali' ]; then
 elif [ $OS == 'ubuntu' ]; then
     TEMPLATE_NAME='ubuntu-1804-template'
 elif [ $OS == 'windows' ]; then
-    TEMPLATE_NAME='w10-template'
+    TEMPLATE_NAME='windows-10-1909-template'
 fi
-
-# prefix vm name with username
-USER_NAME=$(whoami)
-VM_NAME=$USER_NAME'-'$VM_NAME
 
 printf 'Available operating systems:\n'
 printf 'kali, ubuntu, w10\n\n'

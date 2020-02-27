@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include windows_rdp"
+      include_role:
+        name: "windows_rdp"

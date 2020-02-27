@@ -1,0 +1,18 @@
+- hosts: ubuntu-awx
+  become: true
+
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    nodejs_version: "10.x"
+    pip_install_packages:
+      - name: docker
+      - name: docker-compose==1.24.1
+
+
+  roles:
+    - geerlingguy.git
+    - geerlingguy.ansible
+    - geerlingguy.docker
+    - geerlingguy.pip
+    - geerlingguy.nodejs
+    - geerlingguy.awx
