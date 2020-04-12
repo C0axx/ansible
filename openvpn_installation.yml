@@ -1,0 +1,21 @@
+- hosts: dropbox
+  tasks:
+    - name: include key role
+      include_role:
+        name: nkakouros.easyrsa
+
+    - name: Create a symbolic link for the openssl cnf file to work
+      file:
+        src: "/etc/openvpn/easy-rsa/openssl-1.0.0.cnf"
+        dest:  "/etc/openvpn/easy-rsa/openssl.cnf"
+        state: link
+
+    - name: Create a symbolic link for the private key to work
+      file:
+        src: "/etc/easyrsa/pki/private/ca.key"
+        dest:  "/etc/easyrsa/pki/ca.key"
+        state: link
+        
+    - name: include openvpn role
+      include_role:
+        name: Stouts.openvpn

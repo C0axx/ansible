@@ -8,9 +8,9 @@
     #  prompt: "Enter your username"
     #  private: no
 
-    - name: vcenter_password
-      prompt: "Enter your password (input hidden)"
-      private: yes
+    # - name: vcenter_password
+    #   prompt: "Enter your password (input hidden)"
+    #   private: yes
 
     # - name: vm_name
     #   prompt: "Enter your vm name."

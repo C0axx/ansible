@@ -13,9 +13,9 @@
 
 # runs the playbook specified by template name
 - name: configure linux vm
-  import_playbook: scanrigg_linux_playbook.yml
-  when: "'kali' in os or 'ubuntu' in os"
+  import_playbook: linux_playbook.yml
+  when: "'windows' not in os"
 
 - name: configure windows vm
-  import_playbook: scanrigg_w10_playbook.yml
+  import_playbook: w10_playbook.yml
   when: "'windows' in os"

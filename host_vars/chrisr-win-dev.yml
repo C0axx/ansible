@@ -1,0 +1,7 @@
+---
+hostname: chrisr-win-dev
+ansible_user: Administrator
+ansible_password: Welcome1
+ansible_connection: winrm
+ansible_winrm_scheme: http
+ansible_port: 5985

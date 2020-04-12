@@ -1,0 +1,11 @@
+- hosts: drone
+  tasks:
+    - name: install docker
+      include_role:
+        name: alvistack.docker
+      register: docker_installed
+
+    - name: install drone
+      include_role:
+        name: appleboy.drone
+      register: drone_installed

@@ -1,0 +1,55 @@
+- hosts: k8s_cluster_node
+  tasks:
+    - name: Disable SELinux
+      selinux:
+        state: disabled
+      register: selinux_disabled
+      when: ansible_os_family == 'RedHat'
+
+    - name: reboot
+      reboot:
+      when: ansible_os_family == 'RedHat' and selinux_disabled.reboot_required 
+
+    - name: Disable SWAP since kubernetes can't work with swap enabled (1/2)
+      shell: swapoff -a
+      when: ansible_swaptotal_mb > 0
+
+    - name: Remove swapfile from /etc/fstab (2/2)
+      mount:
+        name: swap
+        fstype: swap
+        state: absent
+
+    - name: install docker
+      include_role:
+        name: alvistack.docker
+      register: docker_installed
+
+    - name: install kubernetes
+      include_role:
+        name: geerlingguy.kubernetes
+    
+- hosts: k8s_cluster_master
+  tasks:
+    - name: Create and start kube as user (not root!)
+      block:
+        - name: get group id for user
+          shell: 'id -g'
+          register: groupid
+        
+        - name: create .kube directory
+          file:
+            name: $HOME/.kube
+            state: directory
+
+      become: yes
+      become_user: ansible
+      tags: test
+  
+    - name: copy config file to .kube
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: $HOME/.kube/config
+        remote_src: yes
+        owner: $USER
+        group: '{{ groupid.stdout }}'

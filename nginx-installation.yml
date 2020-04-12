@@ -1,0 +1,22 @@
+- hosts: lab-preseed.lab.local
+
+  environment:
+    LANG: 'en_US.UTF-8'
+  
+  tasks:
+    - name: include nginx role
+      include_role:
+        name: geerlingguy.nginx
+
+    - name: Create the home http directory if it does not exist
+      file:
+        path: "/home/{{ansible_user}}/http"
+        state: directory
+        owner: "{{ansible_user}}"
+        group: "{{ansible_user}}"
+  
+    - name: Create a symbolic link to the ansible user home folder
+      file:
+        src: "/home/{{ansible_user}}/http"
+        dest:  "/var/www/{{ansible_fqdn}}"
+        state: link

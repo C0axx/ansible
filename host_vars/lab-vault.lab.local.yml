@@ -1,0 +1,4 @@
+---
+vault_backend: file
+vault_cluster_disable: True
+vault_log_level: debug

@@ -1,0 +1,23 @@
+# playbook for installing cobalt strike
+---
+- hosts: cs_teamservers
+  tasks:
+  - name: include cobaltstrike role
+    include_role:
+      name: cobaltstrike
+    register: cs_installed
+    tags: always
+
+    
+
+# - hosts: cs_operators
+#   become: yes
+#   become_method: sudo
+#   roles:
+#     - cobaltstrike
+
+# - hosts: cs_redirectors
+#   become: yes
+#   become_method: sudo
+#   roles:
+#     - cobaltstrike

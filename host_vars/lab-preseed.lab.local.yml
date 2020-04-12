@@ -1,0 +1,9 @@
+---
+nginx_vhosts:
+  - listen: "80"
+    server_name: "{{ansible_fqdn}}"
+    filename: "{{ansible_fqdn}}.80.conf"
+    root: "/var/www/{{ansible_fqdn}}"
+    extra_parameters: |
+      disable_symlinks off;
+      autoindex on;

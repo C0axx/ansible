@@ -1,0 +1,10 @@
+- hosts: lab-gitlab.home
+
+  environment:
+    LANG: 'en_US.UTF-8'
+  
+  tasks:
+  
+    - name: include gitlab role
+      include_role:
+        name: geerlingguy.gitlab

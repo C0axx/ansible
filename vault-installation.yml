@@ -1,0 +1,9 @@
+- hosts: lab-vault.lab.local
+
+  environment:
+    LANG: 'en_US.UTF-8'
+
+  tasks:
+    - name: include vault role
+      include_role:
+        name: brianshumate.vault

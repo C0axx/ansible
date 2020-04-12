@@ -1,9 +1,8 @@
 ---
 # playbook for windows hacking vm
-- hosts: win_hack_vm
+- hosts: chrisr-win-dev
   tasks:
-    - debug:
-      msg: "Always runs"
+
     - name: include disable_defender role
       include_role:
         name: disable_defender
@@ -75,6 +74,7 @@
     - name: install all security, critical, and rollup updates without a scheduled task
       win_updates:
         category_names:
+          - Updates
           - SecurityUpdates
           - CriticalUpdates
           - UpdateRollups
