@@ -1,7 +1,13 @@
 Ansible Role: Cobalt Strike
 =========
 
-An Ansible Role to install Cobalt Strike. Can be configured as Operator (client) or Teamserver (server). If configured as Teamserver, it will start automatically with the supplied password and C2 profile.
+An Ansible Role to install Cobalt Strike and to configure it either as Operator (client) or Teamserver (server).
+
+If configured as Teamserver, it will start automatically with the supplied password and C2 profile.
+
+If configured as Operator, it will download the artifact and resource kit automatically.
+
+The role installs Cobalt Strike into a cobalstrike folder in your user's home directory `~/cobaltstrike`. Any additional downloads like kits and profiles are put in respective folders inside that directory, so `~/cobaltstrike/profiles` and `~/cobaltstrike/kits`.
 
 Requirements
 ------------
