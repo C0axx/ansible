@@ -1,4 +1,4 @@
-Cobalt Strike
+Ansible Role: Cobalt Strike
 =========
 
 An Ansible Role to install Cobalt Strike. Can be configured as Operator (client) or Teamserver (server). If configured as Teamserver, it will start automatically with the supplied password and C2 profile.
