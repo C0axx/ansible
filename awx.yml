@@ -8,7 +8,6 @@
       - name: docker
       - name: docker-compose==1.24.1
 
-
   roles:
     - geerlingguy.git
     - geerlingguy.ansible
